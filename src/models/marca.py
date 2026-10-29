@@ -11,7 +11,7 @@ class MarcaBase(SQLModel):
 class Marca(MarcaBase, table=True):
     id:int | None = Field(default=None, primary_key=True)
     #la marca tiene lista de productos
-    productos: list["models.producto.Producto"] = Relationship(back_populates="marca")
+    productos: list["models.productos.Producto"] = Relationship(back_populates="marca")
 
 #MODELO CREACION DE MARCA
 class MarcaCreate(MarcaBase):
