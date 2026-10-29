@@ -11,6 +11,7 @@ from sqlmodel import SQLModel
 # Asegurar que el directorio raíz del proyecto esté en sys.path
 sys.path.insert(0, os.path.abspath("."))
 
+from src.models import marca, pedido, productos, usuario
 # Importar modelos para que Alembic detecte los esquemas
 import src.models  # noqa: F401
 

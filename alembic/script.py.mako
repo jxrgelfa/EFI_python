@@ -11,6 +11,7 @@ from alembic import op
 import sqlmodel
 import sqlalchemy as sa
 ${imports if imports else ""}
+import sqlmodel
 
 # revision identifiers, used by Alembic.
 revision: str = ${repr(up_revision)}
