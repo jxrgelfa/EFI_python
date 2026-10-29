@@ -1,30 +1,37 @@
-from contextlib import asynccontextmanager
 from fastapi import FastAPI
-from src.database import init_db
-from src.routers import health
+from fastapi.middleware.cors import CORSMiddleware
+from fastapi_pagination import add_pagination
 
+from routers.health import health_router
 
-@asynccontextmanager
-async def lifespan(app: FastAPI):
-    # Inicialización de base de datos / tablas
-    init_db()
-    yield
-
-
+#Inicio de setup de la API
 app = FastAPI(
     title="EFI Python API",
-    description="API desarrollada para la Evaluación Final Integradora",
+    description="API desarrollada para la EFI",
     version="0.1.0",
-    lifespan=lifespan,
 )
 
-# Registro de routers
-app.include_router(health.router)
 
 
-@app.get("/")
-def read_root():
-    return {
-        "message": "Bienvenido a la API de EFI",
-        "docs": "/docs",
-    }
+#Routers
+
+app.include_router(health_router, tags=["Salud"], prefix="/health")
+
+#Paginacion de los resultados de la App
+add_pagination(app)
+
+#el acceso del CORS
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
+
+
+
+
+
