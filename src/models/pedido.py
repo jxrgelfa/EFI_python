@@ -1,9 +1,12 @@
 from sqlmodel import Field, Relationship, SQLModel
-from typing import TYPE_CHECKING
+from typing import TYPE_CHECKING, Optional
 
 if TYPE_CHECKING:
-    from models.productos import Producto, ProductoPublicNested
-    from models.usuario import Usuario, UsuarioPublic
+    from models.productos import Producto, ProductoPublic
+
+
+from models.usuario import Usuario, UsuarioPublic
+
 #MODELO BASE DE PEDIDO
 class PedidoBase(SQLModel):
     cantidad: int = Field(default=1)
@@ -14,8 +17,8 @@ class PedidoBase(SQLModel):
 #MODELO TABLA DE PEDIDO
 class Pedido(PedidoBase, table=True):
     id:int | None = Field(default=None, primary_key=True)
-    usuario: "Usuario | None" = Relationship(back_populates="pedidos")
-    producto: "Producto | None" = Relationship(back_populates="pedidos")
+    usuario: Optional["Usuario"] = Relationship(back_populates="pedidos")
+    producto: Optional["Producto"] = Relationship(back_populates="pedidos")
 
 #MODELO CREACION DE PEDIDO
 class PedidoCreate(PedidoBase):
@@ -27,5 +30,9 @@ class PedidoPublic(PedidoBase):
 
 #MODELO NESTED
 class PedidoPublicNested(PedidoPublic):
-    usuario: "UsuarioPublic | None" = None
-    producto: "ProductoPublicNested | None" = None
+    usuario:  Optional["UsuarioPublic"] = None
+    producto: Optional["ProductoPublic"] = None
+
+from models.productos import ProductoPublic
+
+PedidoPublicNested.model_rebuild()

@@ -21,6 +21,14 @@ class MarcaCreate(MarcaBase):
 class MarcaPublic(MarcaBase):
     id:int
 
+# #MODELO NESTED
+# class MarcaPublicNested(MarcaPublic):
+#     productos: list["models.productos.ProductoPublic"] = []
+
 #MODELO NESTED
 class MarcaPublicNested(MarcaPublic):
-    productos: list["models.producto.ProductoPublic"] = []
+    productos: list["ProductoPublic"] = []
+
+# Importación real y reconstrucción de Pydantic para /docs
+from models.productos import ProductoPublic
+MarcaPublicNested.model_rebuild()
