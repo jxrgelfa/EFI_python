@@ -1,1 +1,1 @@
-"""Routers y endpoints de la API."""
+"""Paquete principal de la aplicación."""

@@ -1,6 +1,8 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi_pagination import add_pagination
+from routers.marca import marca_router
+from routers.pedido import pedido_router
 
 from routers.health import health_router
 
@@ -12,8 +14,10 @@ app = FastAPI(
 )
 
 
-
 #Routers
+
+app.include_router(marca_router, tags=["Marcas"], prefix="/marcas")
+app.include_router(pedido_router, tags=["Pedidos"], prefix="/pedidos")
 
 app.include_router(health_router, tags=["Salud"], prefix="/health")
 
@@ -29,6 +33,7 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
 
 
 

@@ -9,11 +9,9 @@ from alembic import context
 from sqlmodel import SQLModel
 
 # Asegurar que el directorio raíz del proyecto esté en sys.path
-sys.path.insert(0, os.path.abspath("."))
+sys.path.insert(0, os.path.abspath("src"))
 
-from src.models import marca, pedido, productos, usuario
-# Importar modelos para que Alembic detecte los esquemas
-import src.models  # noqa: F401
+from models import marca, pedido, productos, usuario
 
 # this is the Alembic Config object, which provides
 # access to the values within the .ini file in use.
@@ -49,6 +47,7 @@ def run_migrations_offline() -> None:
     context.configure(
         url=url,
         target_metadata=target_metadata,
+        render_as_batch=True,
         literal_binds=True,
         dialect_opts={"paramstyle": "named"},
     )
@@ -72,7 +71,7 @@ def run_migrations_online() -> None:
 
     with connectable.connect() as connection:
         context.configure(
-            connection=connection, target_metadata=target_metadata
+            connection=connection, render_as_batch=True, target_metadata=target_metadata
         )
 
         with context.begin_transaction():
