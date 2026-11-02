@@ -1,4 +1,4 @@
-from typing import TYPE_CHECKING
+from typing import TYPE_CHECKING, Optional
 from sqlmodel import Field, Relationship, SQLModel
 
 if TYPE_CHECKING:
@@ -17,7 +17,7 @@ class ProductoBase(SQLModel):
 #MODELO TABLA DE PRODUCTO
 class Producto(ProductoBase, table=True):
     id: int| None = Field(default=None, primary_key=True)
-    marca: "Marca | None" = Relationship(back_populates="productos")
+    marca: Optional["Marca"] = Relationship(back_populates="productos")
     pedidos: list["Pedido"] = Relationship(back_populates="producto")
 
 #MODEL CREACION DE MARCA

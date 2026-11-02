@@ -1,5 +1,5 @@
 from sqlmodel import Field, Relationship, SQLModel
-from typing import TYPE_CHECKING
+from typing import TYPE_CHECKING, Optional
 
 if TYPE_CHECKING:
     from models.productos import Producto, ProductoPublicNested
@@ -14,8 +14,8 @@ class PedidoBase(SQLModel):
 #MODELO TABLA DE PEDIDO
 class Pedido(PedidoBase, table=True):
     id:int | None = Field(default=None, primary_key=True)
-    usuario: "Usuario | None" = Relationship(back_populates="pedidos")
-    producto: "Producto | None" = Relationship(back_populates="pedidos")
+    usuario: Optional["Usuario"] = Relationship(back_populates="pedidos")
+    producto: Optional["Producto"] = Relationship(back_populates="pedidos")
 
 #MODELO CREACION DE PEDIDO
 class PedidoCreate(PedidoBase):

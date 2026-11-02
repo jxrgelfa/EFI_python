@@ -101,3 +101,4 @@ def login(credenciales: UsuarioLogin, db: Session = Depends(get_db)):
         raise HTTPException(status_code=401, detail="Email o contraseña incorrectos")
     return usuario
 
+
