@@ -1,4 +1,3 @@
-#Esto es del bianchi
 from typing import Annotated
 
 from fastapi import APIRouter, HTTPException, Path, Depends, Query
@@ -6,14 +5,12 @@ from sqlmodel import Session, select
 from fastapi_pagination import Page
 from fastapi_pagination.ext.sqlmodel import paginate
 
-
-
-from src.database import get_db
-from src.models.productos import (
+from database import get_db
+from models.anidados import ProductoNested
+from models.productos import (
     Producto,
     ProductoCreate,
     ProductoPublic,
-    ProductoPublicNested,
 )
 
 productos_router = APIRouter()
@@ -35,9 +32,8 @@ def listar_productos(db: Session = Depends(get_db)):
     return paginate(db, select(Producto))
 
 
-
 @productos_router.get(
-    "/{id}", responses=NOT_FOUND_RESPONSE, response_model=ProductoPublicNested
+    "/{id}", responses=NOT_FOUND_RESPONSE, response_model=ProductoNested
 )
 def get_producto(
     id: Annotated[int, Path(gt=0)], db: Session = Depends(get_db)
@@ -79,8 +75,8 @@ def actualizar_producto(
 
 
 @productos_router.delete(
-    "/{id}", responses=NOT_FOUND_RESPONSE, status_code=204)
-
+    "/{id}", responses=NOT_FOUND_RESPONSE, status_code=204
+)
 def eliminar_producto(
     id: Annotated[int, Path(gt=0)], db: Session = Depends(get_db)
 ):
@@ -90,11 +86,3 @@ def eliminar_producto(
 
     db.delete(producto)
     db.commit()
-    
-
-
-
-
-
-
-

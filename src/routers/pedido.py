@@ -1,8 +1,10 @@
 from typing import Annotated
 from fastapi import HTTPException, Path, APIRouter, Depends
 from database import get_db
-from models.pedido import Pedido, PedidoBase, PedidoCreate, PedidoPublic, PedidoPublicNested
+from models.pedido import Pedido, PedidoBase, PedidoCreate, PedidoPublic
+from models.anidados import PedidoNested
 from sqlmodel import Session, select
+from fastapi_pagination import Page, paginate
 
 pedido_router = APIRouter()
 
@@ -16,21 +18,24 @@ DICT_NOT_FOUND: dict = {
                 }
             }
         }
-        }
     }
+}
 
 ##########################
 # METODOS GET
 ##########################
 
-@pedido_router.get('/', response_model=list[PedidoPublic])
+@pedido_router.get('/', response_model=Page[PedidoPublic])
 async def get_pedidos(db: Session = Depends(get_db)):
-    return db.exec(select(Pedido)).all()
+    pedidos = db.exec(select(Pedido)).all()
+    return paginate(
+        pedidos
+    )
 
 @pedido_router.get(
     '/{id}',
     responses=DICT_NOT_FOUND,
-    response_model=PedidoPublicNested
+    response_model=PedidoNested
 )
 async def get_pedido_id(id: Annotated[int, Path(gt=0, description="El ID debe ser mayor a cero")], db: Session = Depends(get_db)):
     pedido_obtenido = db.get(Pedido, id)
@@ -44,7 +49,8 @@ async def get_pedido_id(id: Annotated[int, Path(gt=0, description="El ID debe se
 
 @pedido_router.post(
     '/',
-    response_model=PedidoPublicNested
+    response_model=PedidoPublic,
+    status_code=201
 )
 async def agregar_pedido(nuevo_pedido: PedidoCreate, db: Session = Depends(get_db)):
     pedido_db = Pedido.model_validate(nuevo_pedido)
@@ -63,10 +69,10 @@ async def agregar_pedido(nuevo_pedido: PedidoCreate, db: Session = Depends(get_d
 @pedido_router.put(
     '/{id}',
     responses=DICT_NOT_FOUND,
-    response_model=PedidoBase
+    response_model=PedidoPublic
 )
 async def actualizar_pedido(
-    id: Annotated[int,Path(gt=0)],
+    id: Annotated[int, Path(gt=0)],
     pedido_editar: PedidoCreate,
     db: Session = Depends(get_db)
 ):

@@ -1,35 +1,30 @@
-from typing import TYPE_CHECKING, Optional
+from typing import Optional
 from sqlmodel import Field, Relationship, SQLModel
 
-if TYPE_CHECKING:
-    from models.marca import Marca, MarcaPublic
-    from models.pedido import Pedido
-    
-from models.marca import MarcaPublic
+from models.marca import Marca
 
 
-#MODELO BASE DE PRODUCTO
+# MODELO BASE DE PRODUCTO
 class ProductoBase(SQLModel):
-    modelo: str= Field(max_length=90)
+    modelo: str = Field(max_length=90)
     talle: float
-    precio:int
-    activo:bool
-    marca_id: int | None = Field(default = None, foreign_key="marca.id")
+    precio: int
+    activo: bool
+    marca_id: int | None = Field(default=None, foreign_key="marca.id")
 
-#MODELO TABLA DE PRODUCTO
+
+# MODELO TABLA DE PRODUCTO
 class Producto(ProductoBase, table=True):
-    id: int| None = Field(default=None, primary_key=True)
-    marca: Optional["Marca"] = Relationship(back_populates="productos")
+    id: int | None = Field(default=None, primary_key=True)
+    marca: Optional[Marca] = Relationship(back_populates="productos")
     pedidos: list["Pedido"] = Relationship(back_populates="producto")
 
-#MODEL CREACION DE MARCA
+
+# MODELO CREACION DE PRODUCTO
 class ProductoCreate(ProductoBase):
     pass
 
-#MODELO DE LECTURA DE PRODUCTO
-class ProductoPublic(ProductoBase):
-    id:int
 
-#MODELO NESTED
-class ProductoPublicNested(ProductoPublic):
-    marca: MarcaPublic | None=None
+# MODELO DE LECTURA DE PRODUCTO
+class ProductoPublic(ProductoBase):
+    id: int
