@@ -12,6 +12,7 @@ from models import marca, pedido, productos, usuario  # noqa: F401
 from routers.marca import marca_router
 from routers.pedido import pedido_router
 from routers.productos import productos_router
+from routers.usuario import usuario_router
 
 
 @asynccontextmanager
@@ -34,6 +35,7 @@ app = FastAPI(
 app.include_router(marca_router, tags=["Marcas"], prefix="/marcas")
 app.include_router(pedido_router, tags=["Pedidos"], prefix="/pedidos")
 app.include_router(productos_router, tags=["Productos"], prefix="/productos")
+app.include_router(usuario_router, tags=["Usuarios"], prefix="/usuarios")
 
 # Paginacion de los resultados de la App
 add_pagination(app)
