@@ -10,7 +10,7 @@ pedido_router = APIRouter()
 
 DICT_NOT_FOUND: dict = {
     404: {
-        "description": "Si el artículo no se encuentra en la lista",
+        "description": "Si el pedido no se encuentra en la lista",
         "content": {
             "application/json": {
                 "example": {
