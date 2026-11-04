@@ -17,7 +17,7 @@ productos_router = APIRouter()
 
 NOT_FOUND_RESPONSE = {
     404: {
-        "description": "Producto no encontrado",
+        "description": "si el Producto no se encuentra en la lista",
         "content": {
             "application/json": {
                 "example": {"detail": "Producto no encontrado"}

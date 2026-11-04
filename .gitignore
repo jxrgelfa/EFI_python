@@ -47,5 +47,5 @@ dist/
 build/
 *.egg-info/
 
-
+#Comparacion codigo profe
 profesor/
