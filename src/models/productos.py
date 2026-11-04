@@ -6,10 +6,13 @@ from models.marca import Marca
 
 # MODELO BASE DE PRODUCTO
 class ProductoBase(SQLModel):
-    modelo: str = Field(max_length=90)
+    nombre: str = Field(max_length=90)
+    descripcion: str | None = None
     talle: float
+    stock: int = Field(default=0, ge=0)
+    imagen_url: str | None = None
     precio: int
-    activo: bool
+    activo: bool = Field(default=True)
     marca_id: int | None = Field(default=None, foreign_key="marca.id")
 
 
