@@ -8,7 +8,7 @@ from routers.productos import productos_router
 #Inicio de setup de la API
 app = FastAPI(
     title="EFI Python API",
-    description="API desarrollada para la EFI",
+    description="API Desarrollada como evaluacion final intengradora, con el fin de gestionar una tienda de zapatillas virtual (e-commerce)",
     version="0.1.0",
 )
 
