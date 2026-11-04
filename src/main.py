@@ -1,0 +1,41 @@
+from fastapi import FastAPI
+from fastapi.middleware.cors import CORSMiddleware
+from fastapi_pagination import add_pagination
+from routers.marca import marca_router
+from routers.pedido import pedido_router
+from routers.productos import productos_router
+
+#Inicio de setup de la API
+app = FastAPI(
+    title="EFI Python API",
+    description="API Desarrollada como evaluacion final intengradora, con el fin de gestionar una tienda de zapatillas virtual (e-commerce)",
+    version="0.1.0",
+)
+
+
+#Routers
+
+app.include_router(marca_router, tags=["Marcas"], prefix="/marcas")
+app.include_router(pedido_router, tags=["Pedidos"], prefix="/pedidos")
+app.include_router(productos_router, tags=["Productos"], prefix="/productos")
+
+
+#Paginacion de los resultados de la App
+add_pagination(app)
+
+#el acceso del CORS
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
+
+
+
+
+
+
