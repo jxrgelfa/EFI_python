@@ -1,16 +1,16 @@
-EFI - Práctica Profesionalizante I: Python
+# EFI - Práctica Profesionalizante I: Python
 
 Docente: Facundo Esteban Lemo
 Institución: ITEC Río Cuarto
 Carrera: Desarrollo de Software (2026)
 
-Integrantes
+# Integrantes
 Bianchi, Santiago - s.bianchiceli@itecriocuarto.org.ar
 Fernandez, Jorge - l.fernandez@itecriocuarto.org.ar
 Martoccio, Brisa - b.martoccio@itecriocuarto.org.ar
 Sosa, Agustin - o.sosa@itecriocuarto.org.ar
 
-Descripcion del Proyecto
+# Descripcion del Proyecto
 
 API REST desarrollada con Python, FastAPI y SQLModel, con el objetivo de gestionar un e-commerce de calzado deportivo. El sistema administra entidades vinculadas mediante relaciones de clave foránea y esquemas anidados (Nested):
 
@@ -22,7 +22,7 @@ Pedidos: Órdenes de compra que relacionan usuarios y productos.
 Cuenta con soporte CORS habilitado para comunicarse con el frontend de la EFI de JavaScript, paginación en todos los listados mediante fastapi-pagination y control de versiones de esquema con Alembic.
 
 
-Tecnologías Utilizadas
+# Tecnologías Utilizadas
 FastAPI (fastapi[standard])
 SQLModel (Pydantic + SQLAlchemy)
 SQLite
@@ -31,14 +31,14 @@ FastAPI-Pagination
 Uvicorn
 
 
-Instalación y Puesta en Marcha
+# Instalación y Puesta en Marcha
 1. Clonar el repositorio
 
 git clone https://github.com/jxrgelfa/EFI_python.git
 cd EFI_python
 
 
-. Crear y activar el entorno virtual
+2. Crear y activar el entorno virtual
 
 # Windows
 python -m venv env
@@ -63,7 +63,7 @@ fastapi dev src/main.py
 La aplicación quedará disponible en: http://127.0.0.1:8000.
 
 
-DOCUMENTACION INTERACTIVA
+# DOCUMENTACION INTERACTIVA
 
 FastAPI expone la documentación interactiva en:
 
