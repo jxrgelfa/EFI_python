@@ -29,7 +29,7 @@ add_pagination(app)
 app.add_middleware(
     CORSMiddleware,
     allow_origins=[
-    "https://sneakerstoreefi.vercel.app/",
+    "https://sneakerstoreefi.vercel.app",
     "http://localhost:5173",
     "http://127.0.0.1:5173",
     "http://localhost:5174",
