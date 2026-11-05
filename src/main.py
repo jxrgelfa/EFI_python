@@ -5,13 +5,44 @@ from routers.marca import marca_router
 from routers.pedido import pedido_router
 from routers.productos import productos_router
 from routers.usuario import usuario_router
+from contextlib import asynccontextmanager
+from pathlib import Path
+from alembic.config import Config
+from alembic import command
+
+
+BASE_DIR = Path(__file__).resolve().parent.parent
+
+
+def run_migrations():
+    ini_path = BASE_DIR / "alembic.ini"
+    alembic_dir = BASE_DIR / "alembic"
+
+    # Verificación rápida en los logs para confirmar que se subieron los archivos
+    if not ini_path.exists():
+        raise FileNotFoundError(f"No se encontró alembic.ini en: {ini_path}")
+
+    alembic_cfg = Config(str(ini_path))
+
+    # Forzamos la ruta absoluta de la carpeta de migraciones
+    alembic_cfg.set_main_option("script_location", str(alembic_dir))
+
+    command.upgrade(alembic_cfg, "head")
+
+
+@asynccontextmanager
+async def lifespan(app: FastAPI):
+    run_migrations()
+    yield
+
 
 #Inicio de setup de la API
-app = FastAPI(
-    title="EFI Python API",
-    description="API Desarrollada como evaluacion final intengradora, con el fin de gestionar una tienda de zapatillas virtual (e-commerce)",
-    version="0.1.0",
-)
+
+app = FastAPI(lifespan=lifespan)
+
+app.title = "EFI Python API"
+app.description = "API Desarrollada como evaluacion final intengradora, con el fin de gestionar una tienda de zapatillas virtual (e-commerce)"
+app.version="0.1.0"
 
 
 #Routers
@@ -29,18 +60,17 @@ add_pagination(app)
 app.add_middleware(
     CORSMiddleware,
     allow_origins=[
-    "https://sneakerstoreefi.vercel.app",
     "http://localhost:5173",
     "http://127.0.0.1:5173",
     "http://localhost:5174",
     "http://127.0.0.1:5174",
     "http://localhost:3000",
+    "https://sneakerstoreefi.vercel.app",
     ],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
 )
-
 
 
 
